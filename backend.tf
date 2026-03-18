@@ -168,12 +168,12 @@ resource "aws_autoscaling_policy" "main" {
 }
 
 resource "aws_alb_listener_rule" "main" {
-    listener_arn = var.backend_alb_arn
+    listener_arn = local.alb_listener
     priority = 10
 
     condition {
       host_header {
-        values = [ "${var.component}.backend-alb-${var.environment}.${var.domain_name}" ]
+        values = [ local.listener_header ]
       }
     }
 

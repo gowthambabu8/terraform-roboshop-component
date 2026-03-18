@@ -24,6 +24,7 @@ variable "component" {
 
 variable "app_version" {
   type = string
+  default = "v3"
 }
 
 variable "port_number" {
@@ -44,4 +45,5 @@ variable "backend_alb_arn" {
 
 variable "domain_name" {
   type = string
+  default = "happielearning.com"
 }

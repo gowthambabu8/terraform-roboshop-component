@@ -1,8 +1,8 @@
 resource "aws_instance" "main" {
-  ami           = var.ami_id
+  ami           = local.ami_id
   instance_type = "t3.micro"
-  subnet_id = var.subnet_id
-  vpc_security_group_ids = [var.sg_id]
+  subnet_id = local.subnet_id
+  vpc_security_group_ids = [local.sg_id]
   tags = merge(local.common_tags,
     {
       Name = "${var.project}-${var.environment}-${var.component}"
@@ -54,9 +54,9 @@ resource "aws_ami_from_instance" "main" {
 
 resource "aws_lb_target_group" "main" {
   name = "${var.project}-${var.environment}-${var.component}"
-  port = var.port_number
+  port = local.port_number
   protocol = "HTTP"
-  vpc_id = var.vpc_id
+  vpc_id = local.vpc_id
   deregistration_delay = 60
 
   health_check {
@@ -64,8 +64,8 @@ resource "aws_lb_target_group" "main" {
     healthy_threshold = 2
     interval = 30
     matcher = "200-299"
-    path = "${var.health_check_path}"
-    port = var.port_number
+    path = "${local.health_check_path}"
+    port = local.port_number
     protocol = "HTTP"
     timeout = 20
     unhealthy_threshold = 2
@@ -78,7 +78,7 @@ resource "aws_launch_template" "main" {
 
   instance_initiated_shutdown_behavior = "terminate"
   instance_type = "t3.micro"
-  vpc_security_group_ids = [var.sg_id]
+  vpc_security_group_ids = [local.sg_id]
   update_default_version = true
 
   tag_specifications {
@@ -122,7 +122,7 @@ resource "aws_autoscaling_group" "main" {
     version = "$Latest"
   }
 
-  vpc_zone_identifier = [ var.subnet_id ]
+  vpc_zone_identifier = [ local.subnet_id ]
   target_group_arns = [ aws_lb_target_group.main.arn ]
 
   instance_refresh {

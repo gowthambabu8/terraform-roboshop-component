@@ -14,7 +14,7 @@ locals {
   health_check_path = var.component == "frontend" ? "/" : "/health"
   backend_alb_arn = data.aws_ssm_parameter.backend_alb_arn.value
   frontend_alb_arn = data.aws_ssm_parameter.frontend_alb_arn.value
-  alb_listener = var.component == "frontend" ? local.frontend_alb_arn : local.frontend_alb_arn
+  alb_listener = var.component == "frontend" ? local.frontend_alb_arn : local.backend_alb_arn
   listener_header = var.component == "frontend" ? "${var.component}-${var.environment}.${var.domain_name}" : "${var.component}.backend-alb-${var.environment}.${var.domain_name}"
   domain_name = var.domain_name
 }

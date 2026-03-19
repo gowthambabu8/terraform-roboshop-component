@@ -17,4 +17,5 @@ locals {
   alb_listener = var.component == "frontend" ? local.frontend_alb_arn : local.backend_alb_arn
   listener_header = var.component == "frontend" ? "${var.component}-${var.environment}.${var.domain_name}" : "${var.component}.backend-alb-${var.environment}.${var.domain_name}"
   domain_name = var.domain_name
+  rule_priority = var.rule_priority
 }

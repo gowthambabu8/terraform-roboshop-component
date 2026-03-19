@@ -169,7 +169,7 @@ resource "aws_autoscaling_policy" "main" {
 
 resource "aws_alb_listener_rule" "main" {
     listener_arn = local.alb_listener
-    priority = 10
+    priority = local.rule_priority
 
     condition {
       host_header {

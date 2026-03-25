@@ -21,5 +21,4 @@ variable "app_version" {
 
 variable "domain_name" {
   type = string
-  default = "happielearning.com"
 }
